@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Mimi! ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Parisienne&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS INTEGRADO - DESIGN SÊNIOR */
+        :root {
+            --primary-color: #ff6b81;
+            --secondary-color: #fce4ec;
+            --text-dark: #2d3436;
+            --text-light: #ffffff;
+            --gradient-bg: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+
+        .background-gradient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gradient-bg);
+            z-index: -2;
+        }
+
+        #heart-particle-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-section h1 {
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(2.8rem, 10vw, 5.5rem);
+            color: var(--text-light);
+            text-shadow: 2px 4px 15px rgba(0,0,0,0.2);
+            min-height: 1.2em;
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-top: 15px;
+            opacity: 0;
+            font-weight: 300;
+            letter-spacing: 1px;
+            animation: fadeInUp 1.5s ease forwards 2s;
+        }
+
+        /* Container de Conteúdo */
+        .content-wrapper {
+            max-width: 850px;
+            margin: -10vh auto 60px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 50px 40px;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Foto do Casal */
+        .photo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .photo-container {
+            width: clamp(220px, 50vw, 320px);
+            height: clamp(220px, 50vw, 320px);
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            border: 10px solid white;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-container:hover {
+            transform: scale(1.03);
+        }
+
+        .photo-container img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+        .photo-caption {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        /* Texto da Mensagem */
+        .section-title {
+            font-family: 'Parisienne', cursive;
+            font-size: 3rem;
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 35px;
+        }
+
+        .message-content p { 
+            margin-bottom: 25px; 
+            font-size: 1.15rem;
+            color: #444;
+            text-align: center; 
+        }
+
+        .signature {
+            font-family: 'Parisienne', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 50px;
+            color: var(--primary-color);
+        }
+
+        /* Animações e Efeitos */
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            user-select: none;
+            animation: floatUp 4s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(1.8); opacity: 0; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1.2s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .content-wrapper { padding: 30px 20px; margin: -5vh 15px 40px; }
+            .section-title { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-gradient"></div>
+    <div id="heart-particle-container"></div>
+
+    <header class="hero-section">
+        <h1 id="typing-text"></h1>
+        <p class="subtitle">Hoje o dia é todo seu, e o presente é meu por ter você.</p>
+    </header>
+
+    <main class="content-wrapper">
+        <section class="photo-section">
+            <div class="photo-container">
+                <img src="foto-do-casal.jpg.jpeg" alt="Minha Mimi" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+            </div>
+            <p class="photo-caption">Admiro cada detalhe em você. ✨</p>
+        </section>
+
+        <section class="message-section reveal">
+            <h2 class="section-title">Para a minha Mimi</h2>
+            <div class="message-content">
+                <p>Feliz aniversário, meu amor! Queria te desejar tudo de bom e o mais incrível deste mundo. Aproveite bastante o seu dia e continue sendo essa mulher tão dedicada e esforçada; eu te admiro muito por isso.</p>
+                
+                <p>Queria aproveitar para dizer algumas coisas... Você chegou de repente na minha vida e, aos poucos, foi tomando o meu coração. Eu espero muito que a gente dê certo, pois você é tudo o que eu sempre procurei: uma garota estudiosa, linda, maravilhosa, que tem visão de futuro e, o mais importante de tudo, segue o caminho de Deus!</p>
+                
+                <p>Torço muito para que você consiga realizar todos os seus sonhos e que consiga bater a sua meta no ENEM (kkkkkk), porque eu vejo o seu esforço todos os dias e o quanto você merece.</p>
+                
+                <p>A cada dia que passa, eu crio mais admiração e amor por você. Estou morrendo de saudades! Que Deus abençoe você e a sua família.</p>
+            </div>
+            <p class="signature">Beijos, meu amor! 🫶</p>
+        </section>
+    </main>
+
+    <script>
+        /* JAVASCRIPT INTEGRADO */
+
+        // 1. Efeito de Digitação Sênior
+        const titleElement = document.getElementById('typing-text');
+        const text = "Feliz Aniversário, meu amor!";
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                titleElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 120);
+            }
+        }
+
+        // Inicia a digitação após um pequeno delay
+        window.onload = () => {
+            setTimeout(typeWriter, 500);
+            startHeartRain();
+        };
+
+        // 2. Sistema de Partículas de Coração
+        const container = document.getElementById('heart-particle-container');
+
+        function createHeart(x, y, isClick = false) {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-particle';
+            
+            // Posição
+            const startX = x || Math.random() * window.innerWidth;
+            const startY = y || window.innerHeight + 50;
+            
+            heart.style.left = startX + 'px';
+            heart.style.top = startY + 'px';
+            
+            // Se for clique, espalha em várias direções
+            if (isClick) {
+                heart.style.left = x + (Math.random() * 100 - 50) + 'px';
+            }
+
+            container.appendChild(heart);
+
+            // Remove do DOM após a animação para não pesar o navegador
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+
+        // Chuva constante suave
+        function startHeartRain() {
+            setInterval(() => {
+                createHeart();
+            }, 600);
+        }
+
+        // Explosão de corações ao clicar
+        document.addEventListener('click', (e) => {
+            for(let i = 0; i < 12; i++) {
+                setTimeout(() => createHeart(e.clientX, e.clientY, true), i * 50);
+            }
+        });
+
+        // 3. Reveal on Scroll (Efeito de surgimento ao rolar)
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+
+        // Mensagem secreta no Console (F12)
+        console.log("%cParabéns, Mimi! ❤️ O código do amor não tem erros.", "color: #ff6b81; font-size: 20px; font-weight: bold;");
+    </script>
+</body>
+</html>
