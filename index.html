@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Parisienne&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS INTEGRADO - DESIGN SÊNIOR */
         :root {
             --primary-color: #ff6b81;
             --secondary-color: #fce4ec;
@@ -17,11 +16,7 @@
             --gradient-bg: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -45,7 +40,6 @@
             z-index: 10;
         }
 
-        /* Hero Section */
         .hero-section {
             height: 85vh;
             display: flex;
@@ -74,7 +68,6 @@
             animation: fadeInUp 1.5s ease forwards 2s;
         }
 
-        /* Container de Conteúdo */
         .content-wrapper {
             max-width: 850px;
             margin: -10vh auto 60px;
@@ -87,11 +80,7 @@
             z-index: 1;
         }
 
-        /* Foto do Casal */
-        .photo-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+        .photo-section { text-align: center; margin-bottom: 40px; }
 
         .photo-container {
             width: clamp(220px, 50vw, 320px);
@@ -102,25 +91,12 @@
             overflow: hidden;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             transition: transform 0.5s ease;
+            cursor: pointer;
         }
         
-        .photo-container:hover {
-            transform: scale(1.03);
-        }
+        .photo-container:hover { transform: scale(1.03); }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
 
-        .photo-container img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-        }
-
-        .photo-caption {
-            font-style: italic;
-            color: #7f8c8d;
-            font-size: 1rem;
-        }
-
-        /* Texto da Mensagem */
         .section-title {
             font-family: 'Parisienne', cursive;
             font-size: 3rem;
@@ -144,7 +120,6 @@
             color: var(--primary-color);
         }
 
-        /* Animações e Efeitos */
         @keyframes fadeInUp { 
             from { opacity: 0; transform: translateY(30px); } 
             to { opacity: 1; transform: translateY(0); } 
@@ -168,10 +143,7 @@
             transition: all 1.2s ease-out;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         @media (max-width: 600px) {
             .content-wrapper { padding: 30px 20px; margin: -5vh 15px 40px; }
@@ -191,34 +163,34 @@
 
     <main class="content-wrapper">
         <section class="photo-section">
-            <div class="photo-container">
-                <img src="foto-do-casal.jpg.jpeg" alt="Minha Mimi" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+            <div class="photo-container" onclick="startMusic()">
+                <img src="foto-do-casal.jpg.jpeg" alt="Minha Mimi" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80'">
             </div>
-            <p class="photo-caption">Admiro cada detalhe em você. ✨</p>
+            <p style="text-align: center; font-style: italic; color: #7f8c8d;">Clique na nossa foto para ouvir algo especial. ✨</p>
         </section>
 
         <section class="message-section reveal">
             <h2 class="section-title">Para a minha Mimi</h2>
             <div class="message-content">
                 <p>Feliz aniversário, meu amor! Queria te desejar tudo de bom e o mais incrível deste mundo. Aproveite bastante o seu dia e continue sendo essa mulher tão dedicada e esforçada; eu te admiro muito por isso.</p>
-                
                 <p>Queria aproveitar para dizer algumas coisas... Você chegou de repente na minha vida e, aos poucos, foi tomando o meu coração. Eu espero muito que a gente dê certo, pois você é tudo o que eu sempre procurei: uma garota estudiosa, linda, maravilhosa, que tem visão de futuro e, o mais importante de tudo, segue o caminho de Deus!</p>
-                
                 <p>Torço muito para que você consiga realizar todos os seus sonhos e que consiga bater a sua meta no ENEM (kkkkkk), porque eu vejo o seu esforço todos os dias e o quanto você merece.</p>
-                
                 <p>A cada dia que passa, eu crio mais admiração e amor por você. Todos os dias eu agradeço a Deus por ter te colocado na minha vida. Estou morrendo de saudades! Que Deus abençoe você e a sua família.</p>
             </div>
             <p class="signature">Beijos, meu amor! 🫶</p>
         </section>
     </main>
 
-    <script>
-        /* JAVASCRIPT INTEGRADO */
+    <audio id="background-audio" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
 
-        // 1. Efeito de Digitação Sênior
+    <script>
         const titleElement = document.getElementById('typing-text');
+        const audioElement = document.getElementById('background-audio');
         const text = "Feliz Aniversário, meu amor!";
         let index = 0;
+        let audioStarted = false;
 
         function typeWriter() {
             if (index < text.length) {
@@ -228,72 +200,54 @@
             }
         }
 
-        // Inicia a digitação após um pequeno delay
+        // Função para tocar a música
+        function startMusic() {
+            if (!audioStarted) {
+                audioElement.volume = 0.5;
+                audioElement.play().catch(e => console.log("Erro ao tocar áudio"));
+                audioStarted = true;
+            } else {
+                if (audioElement.paused) audioElement.play();
+                else audioElement.pause();
+            }
+        }
+
         window.onload = () => {
             setTimeout(typeWriter, 500);
             startHeartRain();
         };
 
-        // 2. Sistema de Partículas de Coração
         const container = document.getElementById('heart-particle-container');
-
         function createHeart(x, y, isClick = false) {
             const heart = document.createElement('div');
             heart.innerHTML = '❤️';
             heart.className = 'heart-particle';
-            
-            // Posição
             const startX = x || Math.random() * window.innerWidth;
             const startY = y || window.innerHeight + 50;
-            
             heart.style.left = startX + 'px';
             heart.style.top = startY + 'px';
-            
-            // Se for clique, espalha em várias direções
-            if (isClick) {
-                heart.style.left = x + (Math.random() * 100 - 50) + 'px';
-            }
-
+            if (isClick) heart.style.left = x + (Math.random() * 100 - 50) + 'px';
             container.appendChild(heart);
-
-            // Remove do DOM após a animação para não pesar o navegador
-            setTimeout(() => {
-                heart.remove();
-            }, 4000);
+            setTimeout(() => { heart.remove(); }, 4000);
         }
 
-        // Chuva constante suave
-        function startHeartRain() {
-            setInterval(() => {
-                createHeart();
-            }, 600);
-        }
+        function startHeartRain() { setInterval(() => { createHeart(); }, 600); }
 
-        // Explosão de corações ao clicar
         document.addEventListener('click', (e) => {
             for(let i = 0; i < 12; i++) {
                 setTimeout(() => createHeart(e.clientX, e.clientY, true), i * 50);
             }
         });
 
-        // 3. Reveal on Scroll (Efeito de surgimento ao rolar)
         function revealOnScroll() {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                const elementVisible = 150;
-
-                if (elementTop < windowHeight - elementVisible) {
+                if (el.getBoundingClientRect().top < window.innerHeight - 150) {
                     el.classList.add('active');
                 }
             });
         }
-
         window.addEventListener('scroll', revealOnScroll);
-
-        // Mensagem secreta no Console (F12)
-        console.log("%cParabéns, Mimi! ❤️ O código do amor não tem erros.", "color: #ff6b81; font-size: 20px; font-weight: bold;");
     </script>
 </body>
 </html>
