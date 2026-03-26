@@ -26,6 +26,54 @@
             background-color: #f8f9fa;
         }
 
+        /* TELA DE ENTRADA (SPLASH SCREEN) */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gradient-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        .splash-content {
+            text-align: center;
+            color: white;
+            animation: fadeIn 2s ease;
+        }
+
+        .splash-content h2 {
+            font-family: 'Parisienne', cursive;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .heart-loader {
+            font-size: 50px;
+            animation: pulse 1.5s infinite;
+            margin-bottom: 30px;
+        }
+
+        .enter-btn {
+            padding: 15px 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .enter-btn:hover { transform: scale(1.1); }
+
+        /* ESTILOS DO CONTEÚDO PRINCIPAL */
         .background-gradient {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -120,6 +168,14 @@
             color: var(--primary-color);
         }
 
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
         @keyframes fadeInUp { 
             from { opacity: 0; transform: translateY(30px); } 
             to { opacity: 1; transform: translateY(0); } 
@@ -153,6 +209,14 @@
 </head>
 <body>
 
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="heart-loader">❤️</div>
+            <h2>Feito para uma pessoa especial</h2>
+            <button class="enter-btn" onclick="closeSplash()">Abrir com Amor</button>
+        </div>
+    </div>
+
     <div class="background-gradient"></div>
     <div id="heart-particle-container"></div>
 
@@ -173,9 +237,9 @@
             <h2 class="section-title">Para a minha Mimi</h2>
             <div class="message-content">
                 <p>Feliz aniversário, meu amor! Queria te desejar tudo de bom e o mais incrível deste mundo. Aproveite bastante o seu dia e continue sendo essa mulher tão dedicada e esforçada; eu te admiro muito por isso.</p>
-                <p>Queria aproveitar para dizer algumas coisas... Você chegou de repente na minha vida e, aos poucos, foi tomando o meu coração. Eu espero muito que a gente dê certo, pois você é tudo o que eu sempre procurei: uma garota estudiosa, linda, maravilhosa, que tem visão de futuro e, o mais importante de tudo, segue o caminho de Deus!</p>
-                <p>Torço muito para que você consiga realizar todos os seus sonhos e que consiga bater a sua meta no ENEM (kkkkkk), porque eu vejo o seu esforço todos os dias e o quanto você merece.</p>
-                <p>A cada dia que passa, eu crio mais admiração e amor por você. Todos os dias eu agradeço a Deus por ter te colocado na minha vida. Estou morrendo de saudades! Que Deus abençoe você e a sua família.</p>
+                <p>Queria aproveitar para dizer algumas coisas... Você chegou de repente na minha vida e, aos poucos, foi tomando o meu coração. Eu espero muito que a gente dê certo, pois você é tudo o que eu sempre procurei: uma garota estudiosa, linda, maravilhosa, engraçada, que tem visão de futuro, e o mais importante de tudo, segue o caminho de Deus!</p>
+                <p>Torço muito para que você consiga realizar todos os seus sonhos e que consiga bater a sua meta no ENEM (kkkkkk), porque eu vejo o seu espaço todos os dias e o quanto você merece.</p>
+                <p>A cada dia que passa, eu crio mais admiração e amor por você. Todos os dias eu agradeço a Deus por ter te colocado na minha vida. Estou morrendo de saudades! Que Deus abençoe você e a sua família. Espero que você seja a mulher com quem eu me case!</p>
             </div>
             <p class="signature">Beijos, meu amor! 🫶</p>
         </section>
@@ -188,9 +252,19 @@
     <script>
         const titleElement = document.getElementById('typing-text');
         const audioElement = document.getElementById('background-audio');
+        const splash = document.getElementById('splash-screen');
         const text = "Feliz Aniversário, meu amor!";
         let index = 0;
         let audioStarted = false;
+
+        // Função para fechar a tela de entrada e começar a música
+        function closeSplash() {
+            splash.style.opacity = '0';
+            splash.style.visibility = 'hidden';
+            // Inicia a música e a digitação ao abrir
+            startMusic();
+            setTimeout(typeWriter, 500);
+        }
 
         function typeWriter() {
             if (index < text.length) {
@@ -200,7 +274,6 @@
             }
         }
 
-        // Função para tocar a música
         function startMusic() {
             if (!audioStarted) {
                 audioElement.volume = 0.5;
@@ -213,7 +286,6 @@
         }
 
         window.onload = () => {
-            setTimeout(typeWriter, 500);
             startHeartRain();
         };
 
